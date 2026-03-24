@@ -20,7 +20,10 @@ __host__ int main(){
 
     float* x_d = nullptr;
     float* out_d = nullptr;
-    x_d = (float*)cudaMalloc((void**)&x_d, dim * sizeof(float)); // 因为要修改这个指针，要传入指针的地址（二重指针）。
-    out_d = (float*)cudaMalloc((void**)&out_d, dim * sizeof(float));
+    cudaMalloc((void**)&x_d, dim * sizeof(float)); // 因为要修改这个指针，要传入指针的地址（二重指针）。
+    cudaMalloc((void**)&out_d, dim * sizeof(float));
+    cudaMemcpy(x_d, x_h, dim * sizeof(float), cudaMemcpyHostToDevice); // 【记忆】先写target，再写源数据，然后是方向。写方向是为了方便管理。
+    cudaMemcpy(out_d, out_h, dim * sizeof(float), cudaMemcpyHostToDevice);
+    
 
 }
