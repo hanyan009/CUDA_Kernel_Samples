@@ -72,7 +72,7 @@ __host__ int main(){
     cout << "<==x on host" << endl;
 
     // 启动kernel（调用global函数）
-    if(B < 256) layernorm<<<1, B>>>(x_d, out_d, gamma_d, beta_d, B, dim);
+    if(B < 256) layernorm<<<B, 256>>>(x_d, out_d, gamma_d, beta_d, B, dim);
 
     cudaMemcpy(out_h, out_d, N * sizeof(float), cudaMemcpyDeviceToHost);
 
